@@ -1,0 +1,130 @@
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+
+<div ng-app="optionsCalc">
+    <div class="row" ng-controller="optionsCalcCtrl">
+        <div class="col-xs-3 flip">
+            <div class="card">
+                <div class="face front">
+                    <form method="post" id="optionsCalcForm" ng-submit="recalc($event);">
+                        <table>
+                            <tr>
+                                <td><h2>Options</h2></td>
+                                <td><a class="fr" href="" ng-click="showConfiguration($event);">Config</a></td>
+                            </tr>
+                            <tr>
+                                <td>Symbol</td>
+                                <td><input type="text" ng-model="Symbol" /></td>
+                            </tr>
+                            <tr>
+                                <td>Price</td>
+                                <td><input type="text" ng-model="LastPrice" /></td>
+                            </tr>
+                            <tr class="bt" ng-repeat-start="optionPos in OptionPositions">
+                                <td>Option</td>
+                                <td><input type="text" ng-model="optionPos.Name" /></td>
+                            </tr>
+                            <tr>
+                                <td>Action</td>
+                                <td>
+                                    <select class="optionsBuySell" ng-model="optionPos.BuySell">
+                                        <option value="Buy">Buy</option>
+                                        <option value="Sell">Sell</option>
+                                    </select>
+
+                                    <select class="optionsCallPut" ng-model="optionPos.CallPut">
+                                        <option value="Call">Call</option>
+                                        <option value="Put">Put</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Contracts</td>
+                                <td><input type="text" ng-model="optionPos.Contracts" /></td>
+                            </tr>
+                            <tr>
+                                <td>Premium</td>
+                                <td><input type="text" ng-model="optionPos.Premium" /></td>
+                            </tr>
+                            <tr>
+                                <td>Strike Price</td>
+                                <td><input type="text" ng-model="optionPos.StrikePrice" /></td>
+                            </tr>
+                            <tr class="bb" ng-repeat-end>
+                                <td></td>
+                                <td><a href="" ng-click="deleteOptionPosition($index);">Delete</a></td>
+                            </tr>
+                            <tr class="bt" ng-repeat-start="stockPos in StockPositions">
+                                <td>Position</td>
+                                <td><input type="text" ng-model="stockPos.Name" /></td>
+                            </tr>
+                            <tr>
+                                <td>Shares</td>
+                                <td><input type="text" ng-model="stockPos.Shares" /></td>
+                            </tr>
+                            <tr>
+                                <td>Price</td>
+                                <td><input type="text" ng-model="stockPos.Price" /></td>
+                            </tr>
+                            <tr class="bb" ng-repeat-end>
+                                <td></td>
+                                <td><a href="" ng-click="deleteStockPosition($index);">Delete</a></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="" ng-click="newOptionPosition($event);">+ Option Position</a>
+                                </td>
+                                <td>
+                                    <a href="" ng-click="newStockPosition($event);">+ Stock Position</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <a class="btn btn-default" href="" ng-click="recalc($event);">Recalculate &raquo;</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                <div class=" face back">
+                    <table>
+                        <tr>
+                            <td><h3>Config</h3></td>
+                            <td><a class="fr" href="" ng-click="hideConfiguration($event);">Save</a></td>
+                        </tr>
+                        <tr>
+                            <td>Total Categories</td>
+                            <td><input type="text" ng-model="TotalCategories" /></td>
+                        </tr>
+                        <tr>
+                            <td>Price Step</td>
+                            <td><input type="text" ng-model="PriceStep" /></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <a class="btn btn-default" href="" ng-click="hideConfiguration($event);">Save &raquo;</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-9">
+            <h2>Results</h2>
+            <p ng-show="Name">Here are your results for <strong>{{Name}}</strong></p>
+            <p ng-show="!Name">Please select options and recalculate...</p>
+            <div id="optionsCalcGraph"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="~/Scripts/app/OptionsCalc.js"></script>
+}
